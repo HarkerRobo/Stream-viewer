@@ -28,7 +28,7 @@ public class CameraTest {
             @Override
             public void run() {
                 SimpleVideoComponent vc = new SimpleVideoComponent();
-                Bin bin = Bin.launch("autovideosrc ! videoconvert ! capsfilter caps=video/x-raw,width=640,height=480", true);
+                Bin bin = Bin.launch("udpsrc port=5001 ! application/x-rtp, payload=96 ! rtph264depay ! avdec_h264 ! videoconvert", true);
                 pipe = new Pipeline();
                 pipe.addMany(bin, vc.getElement());
                 Pipeline.linkMany(bin, vc.getElement());           
